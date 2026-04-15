@@ -62,4 +62,12 @@ public class Tripulante : MonoBehaviour
     }
 
 
+    private void ChangeEstado(Estados novoEstado)
+    {
+        estado = novoEstado;
+        Timer = 0f;
+    }
+
+
+
 }
