@@ -66,12 +66,28 @@ public class Tripulante : MonoBehaviour
     /// method to send the tripulant to a specific modulo
     /// </summary>
     /// <param name="mod"></param>
-    private void Move(Modulos mod)
+    private void Move(Module mod)
     {
         if (mod == null) return;
 
         //Usa o "setdestination" do navmesh para informar o tripulante para onde tem que se mover
         agent.SetDestination(mod.transform.position);
+    }
+
+    private void UpdateMoving()
+    {
+        if (agent.pathPending) return;
+
+        if (agent.remainingDistance < 1f)
+        {
+            // entrou no módulo
+            targetModule.Enter(gameObject);
+
+            if (targetModule.Type == ModuleType.Habitat)
+                ChangeState(AgentState.Resting);
+            else
+                ChangeState(AgentState.Working);
+        }
     }
 
 
@@ -99,22 +115,53 @@ public class Tripulante : MonoBehaviour
 
     private void PickNextTask()
     {
-        int r = Random.Range(0, 3);
+        ModuleType targetType;
 
-        ModuleType type =
-            r == 0 ? ModuleType.Laboratory :
-            r == 1 ? ModuleType.Habitat :
-                     ModuleType.Storage;
+        if (energy < 30f)
+            targetType = ModuleType.Habitat;
+        else if (resources > 60f)
+            targetType = ModuleType.Storage;
+        else
+            targetType = ModuleType.Laboratory;
 
-        var options = System.Array.FindAll(modulos, m => m.Type == type);
+        module[] options = System.Array.FindAll(modules,
+            m => m.Type == targetType && m.state == ModuleState.Normal && m.HashSpace);
+        
+        if (options.Lenght == 0) return;
 
-        if (options.Length == 0) return;
+        targetModule = options[Random.Range(0, options.Length)];
 
-        moduloTarget = options[Random.Range(0, options.Length)];
-
-        ChangeState(estado.Moving);
+        ChangeState(Estados.Moving);
     }
 
 
+    private void UpdateWorking()
+    {
+        if (timer > 3f)
+        {
+            resources += 20f;
+            energy -= 10f;
+
+            ChangeState(AgentState.Idle);
+        }
+    }
+
+    private void UpdateResting()
+    {
+        if (timer > 5f)
+        {
+            energy = Mathf.Min(maxEnergy, energy + 40f);
+
+            ChangeState(AgentState.Idle);
+        }
+    }
+
+    private void UpdateNeeds()
+    {
+        energy -= Time.deltaTime * 2f;
+
+        energy = Mathf.Clamp(energy, 0f, maxEnergy);
+        resources = Mathf.Clamp(resources, 0f, 100f);
+    }
 
 }
