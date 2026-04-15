@@ -68,6 +68,25 @@ public class Tripulante : MonoBehaviour
         Timer = 0f;
     }
 
+    private void OnEnterEstado(Estados novoEstado)
+    {
+        switch (novoEstado) 
+        {
+            case AgentState.Idle:
+                break;
+
+            case AgentState.Moving:
+                MoveTo(targetModule);
+                break;
+
+            case AgentState.Working:
+                break;
+
+            case AgentState.Resting:
+                break;
+
+        }
+
 
 
 }
