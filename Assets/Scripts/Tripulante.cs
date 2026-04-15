@@ -30,4 +30,16 @@ public class Tripulante : MonoBehaviour
     {
         
     }
+
+    /// <summary>
+    /// method to send the tripulant to a specific modulo
+    /// </summary>
+    /// <param name="mod"></param>
+    private void Move(Modulos mod)
+    {
+        if (mod == null) return;
+
+        //Usa o "setdestination" do navmesh para informar o tripulante para onde tem que se mover
+        agent.SetDestination(mod.transform.position);
+    }
 }
