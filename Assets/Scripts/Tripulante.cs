@@ -24,7 +24,7 @@ public class Tripulante : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        modulos = FindObjectsofType<modulos>();
+        modulos = FindObjectsOfType<modulos>();
     }
 
     // Update is called once per frame
@@ -70,7 +70,7 @@ public class Tripulante : MonoBehaviour
 
     private void OnEnterEstado(Estados novoEstado)
     {
-        switch (novoEstado) 
+        switch (novoEstado)
         {
             case AgentState.Idle:
                 break;
@@ -86,6 +86,26 @@ public class Tripulante : MonoBehaviour
                 break;
 
         }
+
+    }
+
+    private void PickNextTask()
+    {
+        int r = Random.Range(0, 3);
+
+        ModuleType type =
+            r == 0 ? ModuleType.Laboratory :
+            r == 1 ? ModuleType.Habitat :
+                     ModuleType.Storage;
+
+        var options = System.Array.FindAll(modulos, m => m.Type == type);
+
+        if (options.Length == 0) return;
+
+        moduloTarget = options[Random.Range(0, options.Length)];
+
+        ChangeEstado(estado.Moving);
+    }
 
 
 
