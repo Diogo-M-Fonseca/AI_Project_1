@@ -14,6 +14,8 @@ public class Tripulante : MonoBehaviour
     //modulo that the tripulante searches for
     private Modulos moduloTarget;
 
+    private float Timer;
+
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -28,6 +30,22 @@ public class Tripulante : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Timer += Timer.deltaTime;
+
+        switch (estado)
+        {
+            case AgentState.Idle:
+                break;
+
+            case AgentState.Moving:
+                break;
+
+            case AgentState.Working:
+                break;
+
+            case AgentState.Resting:
+                break;
+        }
         
     }
 
@@ -42,4 +60,6 @@ public class Tripulante : MonoBehaviour
         //Usa o "setdestination" do navmesh para informar o tripulante para onde tem que se mover
         agent.SetDestination(mod.transform.position);
     }
+
+
 }
