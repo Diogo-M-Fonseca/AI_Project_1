@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 //enum of all module types stored in the same scritp as the module class, recomendation from colleague
 public enum ModuleType 
@@ -21,15 +22,15 @@ public class Module : MonoBehaviour
     [SerializeField] private ModuleType type;
     [SerializeField] private int capacity = 10;
 
-    private ModuleState estado = ModuleState.Normal;
+    private ModuleState state = ModuleState.Normal;
 
     private List<GameObject> agentsInside = new List<GameObject>();
 
     public ModuleType Type { get { return type; } }
     
-    public ModuleState estado { get { return state; } }
+    public ModuleState State { get { return state; } }
 
-    public bool HashSpace => agentsInside.Count < capacity;
+    public bool HasSpace => agentsInside.Count < capacity;
 
     public void Enter(GameObject agent)
     {
@@ -44,8 +45,8 @@ public class Module : MonoBehaviour
         agentsInside.Remove(agent);
     }
 
-    public void SetState(ModuleState novoEstado)
+    public void SetState(ModuleState newState)
     {
-        estado = novoEstado;
+        state = newState;
     }
 }

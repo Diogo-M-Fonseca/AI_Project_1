@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public enum Estados //enum where estados are stated for both for crew and robos
+public enum AgentState //enum where AgentState are stated for both for crew and robos
 {
     Idle,
     Moving,

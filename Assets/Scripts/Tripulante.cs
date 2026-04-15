@@ -7,7 +7,7 @@ public class Tripulante : MonoBehaviour
     private NavMeshAgent agent;
 
     //current estado
-    private Estados estado;
+    private AgentState state;
 
     //collection of all modulos present in the map
     private Module[] modules;
@@ -31,20 +31,20 @@ public class Tripulante : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        modulos = FindObjectsOfType<modulos>();
+        modules = FindObjectsOfType<Module>();
         ChangeState(AgentState.Idle);
     }
 
     // Update is called once per frame
     void Update()
     {
-        timer += Timer.deltaTime;
+        timer += Time.deltaTime;
         UpdateNeeds();
 
-        switch (estado)
+        switch (state)
         {
             case AgentState.Idle:
-                DecideNextTask();
+                PickNextTask();
                 break;
 
             case AgentState.Moving:
@@ -91,23 +91,23 @@ public class Tripulante : MonoBehaviour
     }
 
 
-    private void ChangeState(Estados novoEstado)
+    private void ChangeState(AgentState novoEstado)
     {
         if (targetModule != null)
             targetModule.Exit(gameObject);
 
-        estado = novoEstado;
-        Timer = 0f;
+        state = novoEstado;
+        timer = 0f;
 
-        OnEnterEstado(novoEstado);
+        OnEnterState(novoEstado);
     }
 
-    private void OnEnterEstado(Estados novoEstado)
+    private void OnEnterState(AgentState novoEstado)
     {
         switch (novoEstado)
         {
             case AgentState.Moving:
-                MoveTo(targetModule);
+                Move(targetModule);
                 break;
         }
 
@@ -124,14 +124,14 @@ public class Tripulante : MonoBehaviour
         else
             targetType = ModuleType.Laboratory;
 
-        module[] options = System.Array.FindAll(modules,
-            m => m.Type == targetType && m.state == ModuleState.Normal && m.HashSpace);
+        Module[] options = System.Array.FindAll(modules,
+            m => m.Type == targetType && m.State == ModuleState.Normal && m.HasSpace);
         
-        if (options.Lenght == 0) return;
+        if (options.Length == 0) return;
 
         targetModule = options[Random.Range(0, options.Length)];
 
-        ChangeState(Estados.Moving);
+        ChangeState(AgentState.Moving);
     }
 
 
