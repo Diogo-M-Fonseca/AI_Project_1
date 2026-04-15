@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(NavMeshAgent))]
 public class Tripulante : MonoBehaviour
 {
     private NavMeshAgent agent;
@@ -9,12 +10,18 @@ public class Tripulante : MonoBehaviour
     private Estados estado;
 
     //collection of all modulos present in the map
-    private Modulos[] modulos;
+    private Module[] modules;
 
     //modulo that the tripulante searches for
-    private Modulos moduloTarget;
+    private Module targetModule;
 
-    private float Timer;
+    private float timer;
+
+    private float energy = 100f;
+    private float resources = 0f;
+
+    private const float maxEnergy = 100f;
+
 
     private void Awake()
     {
@@ -25,25 +32,31 @@ public class Tripulante : MonoBehaviour
     void Start()
     {
         modulos = FindObjectsOfType<modulos>();
+        ChangeState(AgentState.Idle);
     }
 
     // Update is called once per frame
     void Update()
     {
-        Timer += Timer.deltaTime;
+        timer += Timer.deltaTime;
+        UpdateNeeds();
 
         switch (estado)
         {
             case AgentState.Idle:
+                DecideNextTask();
                 break;
 
             case AgentState.Moving:
+                UpdateMoving();
                 break;
 
             case AgentState.Working:
+                UpdateWorking();
                 break;
 
             case AgentState.Resting:
+                UpdateResting();
                 break;
         }
         
@@ -62,29 +75,24 @@ public class Tripulante : MonoBehaviour
     }
 
 
-    private void ChangeEstado(Estados novoEstado)
+    private void ChangeState(Estados novoEstado)
     {
+        if (targetModule != null)
+            targetModule.Exit(gameObject);
+
         estado = novoEstado;
         Timer = 0f;
+
+        OnEnterEstado(novoEstado);
     }
 
     private void OnEnterEstado(Estados novoEstado)
     {
         switch (novoEstado)
         {
-            case AgentState.Idle:
-                break;
-
             case AgentState.Moving:
                 MoveTo(targetModule);
                 break;
-
-            case AgentState.Working:
-                break;
-
-            case AgentState.Resting:
-                break;
-
         }
 
     }
@@ -104,7 +112,7 @@ public class Tripulante : MonoBehaviour
 
         moduloTarget = options[Random.Range(0, options.Length)];
 
-        ChangeEstado(estado.Moving);
+        ChangeState(estado.Moving);
     }
 
 
