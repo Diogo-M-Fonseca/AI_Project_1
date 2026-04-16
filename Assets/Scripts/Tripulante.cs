@@ -111,7 +111,8 @@ public class Tripulante : MonoBehaviour
         //avoid loop
         if (state == novoEstado) return;
 
-        if (targetModule != null)
+        //agent only exits modules after it has stoped moving
+        if (targetModule != null && state != AgentState.Moving)
             targetModule.Exit(gameObject);
 
         state = novoEstado;
@@ -143,7 +144,8 @@ public class Tripulante : MonoBehaviour
             targetType = ModuleType.Laboratory;
 
         Module[] options = System.Array.FindAll(modules,
-            m => m.Type == targetType && m.State == ModuleState.Normal && m.HasSpace);
+            m => m.Type == targetType && 
+            m.State == ModuleState.Normal && m.HasSpace);
         
         if (options.Length == 0) return;
 
@@ -197,11 +199,12 @@ public class Tripulante : MonoBehaviour
     // helped by AI
     private Module FindSafeModule()
     {
-        Module[] safemodules = System.Array.FindAll(modules, m => m.State == ModuleState.Normal && m.HasSpace);
+        Module[] safemodules = System.Array.FindAll(modules, 
+            m => m.State == ModuleState.Normal && m.HasSpace);
 
         if(safemodules.Length == 0) return null;
 
-        return safeModules[Random.Range(0, safemodules.Length)];
+        return safemodules[Random.Range(0, safemodules.Length)];
     }
 
     private bool IsInDanger()
