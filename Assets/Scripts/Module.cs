@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public enum ModuleType 
 {
     Habitat,
+    GreenHouse,
     Laboratory,
     Storage,
     Technical
@@ -13,14 +14,18 @@ public enum ModuleType
 public enum ModuleState
 {
     Normal,
-    Dangerous,
-    Blocked
+    NoOxigen,
+    Fire,
+    NoPower
 }
 
 public class Module : MonoBehaviour
 {
     [SerializeField] private ModuleType type;
     [SerializeField] private int capacity = 10;
+
+    private Renderer renderer;
+    private Color originalColor;
 
     private ModuleState state = ModuleState.Normal;
 
@@ -31,6 +36,14 @@ public class Module : MonoBehaviour
     public ModuleState State { get { return state; } }
 
     public bool HasSpace => agentsInside.Count < capacity;
+
+    public void Awake()
+    {
+        renderer = GetComponent<Renderer>();
+
+        originalColor = renderer.material.color;
+        Debug.Log("Renderer: " + renderer);
+    }
 
     public void Enter(GameObject agent)
     {
@@ -48,5 +61,30 @@ public class Module : MonoBehaviour
     public void SetState(ModuleState newState)
     {
         state = newState;
+        Debug.Log("Module state changed to: " + newState);
+        VisualChanger();
+    }
+
+    private void VisualChanger()
+    {
+        switch (state)
+        {
+
+            case ModuleState.Normal:
+                renderer.material.color = originalColor;
+                break;
+
+            case ModuleState.NoOxigen:
+                renderer.material.color = Color.white;
+                break;
+
+            case ModuleState.Fire:
+                renderer.material.color = Color.red;
+                break;
+
+            case ModuleState.NoPower:
+                renderer.material.color = Color.Lerp(originalColor, Color.black, 0.7f);
+                break;
+        }
     }
 }

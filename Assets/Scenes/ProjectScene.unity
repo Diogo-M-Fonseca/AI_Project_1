@@ -663,7 +663,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b8a7b3ec06dbe5419f966be22eff3ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Module
-  type: 0
+  type: 1
   capacity: 10
 --- !u!1 &484173019
 GameObject:
@@ -1234,7 +1234,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b8a7b3ec06dbe5419f966be22eff3ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Module
-  type: 1
+  type: 2
   capacity: 10
 --- !u!1 &730051077
 GameObject:
@@ -2021,7 +2021,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b8a7b3ec06dbe5419f966be22eff3ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Module
-  type: 2
+  type: 3
   capacity: 10
 --- !u!1 &1329548338
 GameObject:
@@ -2174,7 +2174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b8a7b3ec06dbe5419f966be22eff3ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Module
-  type: 3
+  type: 4
   capacity: 10
 --- !u!1 &1408628645
 GameObject:

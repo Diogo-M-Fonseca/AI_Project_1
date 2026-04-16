@@ -33,15 +33,15 @@ public class IncidentManager : MonoBehaviour
         switch (type)
         {
             case IncidentType.Fire:
-                module.SetState(ModuleState.Blocked);
+                module.SetState(ModuleState.Fire);
                 break;
 
             case IncidentType.OxygenLeak:
-                module.SetState(ModuleState.Dangerous);
+                module.SetState(ModuleState.NoOxigen);
                 break;
 
             case IncidentType.PowerFailure:
-                module.SetState(ModuleState.Blocked);
+                module.SetState(ModuleState.NoPower);
                 break;
         }
     }
@@ -52,6 +52,7 @@ public class IncidentManager : MonoBehaviour
         incidents.Add(new Incident(type, module));
 
         ApplyIncident(module, type);
+        Debug.Log("[INCIDENT] " + type +" at " + module.Type +" (" + module.gameObject.name + ")");
     }
 
 
@@ -83,12 +84,12 @@ public class IncidentManager : MonoBehaviour
             {
                 if (incident.Type == IncidentType.Fire)
                 {
-                    modules[i].SetState(ModuleState.Blocked);
+                    modules[i].SetState(ModuleState.Fire);
                 }
 
                 if (incident.Type == IncidentType.OxygenLeak)
                 {
-                    modules[i].SetState(ModuleState.Dangerous);
+                    modules[i].SetState(ModuleState.NoOxigen);
                 }
             }
         }
