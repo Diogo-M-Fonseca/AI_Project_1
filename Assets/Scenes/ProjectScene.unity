@@ -529,7 +529,6 @@ GameObject:
   - component: {fileID: 421268145}
   - component: {fileID: 421268148}
   - component: {fileID: 421268149}
-  - component: {fileID: 421268150}
   m_Layer: 0
   m_Name: Estufa1
   m_TagString: Untagged
@@ -666,26 +665,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Module
   type: 1
   capacity: 10
---- !u!114 &421268150
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 421268143}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshModifier
-  m_SerializedVersion: 0
-  m_OverrideArea: 1
-  m_Area: 0
-  m_OverrideGenerateLinks: 0
-  m_GenerateLinks: 0
-  m_IgnoreFromBuild: 0
-  m_ApplyToChildren: 1
-  m_AffectedAgents: ffffffff
 --- !u!1 &484173019
 GameObject:
   m_ObjectHideFlags: 0
@@ -1121,7 +1100,6 @@ GameObject:
   - component: {fileID: 691041712}
   - component: {fileID: 691041715}
   - component: {fileID: 691041716}
-  - component: {fileID: 691041717}
   m_Layer: 0
   m_Name: "Laborat\xF3rio1"
   m_TagString: Untagged
@@ -1258,26 +1236,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Module
   type: 2
   capacity: 10
---- !u!114 &691041717
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 691041710}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshModifier
-  m_SerializedVersion: 0
-  m_OverrideArea: 1
-  m_Area: 0
-  m_OverrideGenerateLinks: 0
-  m_GenerateLinks: 0
-  m_IgnoreFromBuild: 0
-  m_ApplyToChildren: 1
-  m_AffectedAgents: ffffffff
 --- !u!1 &730051077
 GameObject:
   m_ObjectHideFlags: 0
@@ -1929,7 +1887,6 @@ GameObject:
   - component: {fileID: 1302353272}
   - component: {fileID: 1302353275}
   - component: {fileID: 1302353276}
-  - component: {fileID: 1302353277}
   m_Layer: 0
   m_Name: "Armaz\xE9ns1"
   m_TagString: Untagged
@@ -2066,26 +2023,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Module
   type: 3
   capacity: 10
---- !u!114 &1302353277
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1302353270}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshModifier
-  m_SerializedVersion: 0
-  m_OverrideArea: 1
-  m_Area: 0
-  m_OverrideGenerateLinks: 0
-  m_GenerateLinks: 0
-  m_IgnoreFromBuild: 0
-  m_ApplyToChildren: 1
-  m_AffectedAgents: ffffffff
 --- !u!1 &1329548338
 GameObject:
   m_ObjectHideFlags: 0
@@ -2100,7 +2037,6 @@ GameObject:
   - component: {fileID: 1329548340}
   - component: {fileID: 1329548343}
   - component: {fileID: 1329548344}
-  - component: {fileID: 1329548345}
   m_Layer: 0
   m_Name: "ZonaT\xE9cnica1"
   m_TagString: Untagged
@@ -2240,26 +2176,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Module
   type: 4
   capacity: 10
---- !u!114 &1329548345
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1329548338}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshModifier
-  m_SerializedVersion: 0
-  m_OverrideArea: 1
-  m_Area: 0
-  m_OverrideGenerateLinks: 0
-  m_GenerateLinks: 0
-  m_IgnoreFromBuild: 0
-  m_ApplyToChildren: 1
-  m_AffectedAgents: ffffffff
 --- !u!1 &1408628645
 GameObject:
   m_ObjectHideFlags: 0
@@ -2722,7 +2638,6 @@ GameObject:
   - component: {fileID: 1630256185}
   - component: {fileID: 1630256188}
   - component: {fileID: 1630256189}
-  - component: {fileID: 1630256190}
   m_Layer: 0
   m_Name: "Habita\xE7\xE3o1"
   m_TagString: Untagged
@@ -2859,26 +2774,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Module
   type: 0
   capacity: 10
---- !u!114 &1630256190
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1630256183}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshModifier
-  m_SerializedVersion: 0
-  m_OverrideArea: 1
-  m_Area: 0
-  m_OverrideGenerateLinks: 0
-  m_GenerateLinks: 0
-  m_IgnoreFromBuild: 0
-  m_ApplyToChildren: 1
-  m_AffectedAgents: ffffffff
 --- !u!1 &1634976813
 GameObject:
   m_ObjectHideFlags: 0
@@ -3184,7 +3079,6 @@ GameObject:
   - component: {fileID: 1888836502}
   - component: {fileID: 1888836505}
   - component: {fileID: 1888836506}
-  - component: {fileID: 1888836507}
   m_Layer: 0
   m_Name: "Habita\xE7\xE3o2"
   m_TagString: Untagged
@@ -3321,26 +3215,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Module
   type: 0
   capacity: 10
---- !u!114 &1888836507
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1888836500}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshModifier
-  m_SerializedVersion: 0
-  m_OverrideArea: 1
-  m_Area: 0
-  m_OverrideGenerateLinks: 0
-  m_GenerateLinks: 0
-  m_IgnoreFromBuild: 0
-  m_ApplyToChildren: 1
-  m_AffectedAgents: ffffffff
 --- !u!1 &1907406683
 GameObject:
   m_ObjectHideFlags: 0

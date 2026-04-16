@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.AI;
 
 //enum of all module types stored in the same scritp as the module class, recomendation from colleague
 public enum ModuleType 
@@ -27,7 +26,6 @@ public class Module : MonoBehaviour
 
     private Renderer renderer;
     private Color originalColor;
-    private NavMeshModifier modifier;
 
     private ModuleState state = ModuleState.Normal;
 
@@ -42,7 +40,6 @@ public class Module : MonoBehaviour
     private void Awake()
     {
         renderer = GetComponent<Renderer>();
-        modifier = GetComponent<NavMeshModifier>();
 
         originalColor = renderer.material.color;
         Debug.Log("Renderer: " + renderer);
@@ -75,22 +72,18 @@ public class Module : MonoBehaviour
 
             case ModuleState.Normal:
                 renderer.material.color = originalColor;
-                modifier.area = NavMesh.GetAreaFromName("Walkable");
                 break;
 
             case ModuleState.NoOxigen:
                 renderer.material.color = Color.white;
-                modifier.area = NavMesh.GetAreaFromName("Blocked");
                 break;
 
             case ModuleState.Fire:
                 renderer.material.color = Color.red;
-                modifier.area = NavMesh.GetAreaFromName("Blocked");
                 break;
 
             case ModuleState.NoPower:
                 renderer.material.color = Color.Lerp(originalColor, Color.black, 0.7f);
-                modifier.area = NavMesh.GetAreaFromName("Danger");
                 break;
         }
     }

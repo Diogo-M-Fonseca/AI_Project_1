@@ -115,7 +115,6 @@ public class Tripulante : MonoBehaviour
         if (state == AgentState.Moving)
         {
             agent.ResetPath();
-            Move(targetModule);
         }
 
         //agent only exits modules after it has stoped moving
@@ -219,10 +218,10 @@ public class Tripulante : MonoBehaviour
 
     private bool IsInDanger()
     {
-        if( targetModule != null && targetModule.State != ModuleState.Normal)
-            return true;
+        if (targetModule == null) return false;
 
-        return false;
+        return targetModule.State == ModuleState.Fire ||
+               targetModule.State == ModuleState.NoOxigen;
     }
 
 }
