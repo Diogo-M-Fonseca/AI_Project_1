@@ -212,8 +212,10 @@ public class Tripulante : MonoBehaviour
 
     private bool IsInDanger()
     {
-        return targetModule != null &&
-               targetModule.State != ModuleState.Normal;
+        if( targetModule != null && targetModule.State != ModuleState.Normal)
+            return false;
+
+        return true;
     }
 
 }
