@@ -84,6 +84,13 @@ public class Tripulante : MonoBehaviour
 
     private void UpdateMoving()
     {
+        //stops moving if target becomes danger or blocked
+        if (targetModule.State != ModuleState.Normal)
+        {
+            ChangeState(AgentState.Idle);
+            return;
+        }
+
         if (agent.pathPending) return;
 
         if (agent.remainingDistance < 1f)
