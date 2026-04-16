@@ -101,6 +101,9 @@ public class Tripulante : MonoBehaviour
 
     private void ChangeState(AgentState novoEstado)
     {
+        //avoid loop
+        if (state == novoEstado) return;
+
         if (targetModule != null)
             targetModule.Exit(gameObject);
 
