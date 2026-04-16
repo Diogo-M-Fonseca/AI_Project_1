@@ -164,4 +164,10 @@ public class Tripulante : MonoBehaviour
         resources = Mathf.Clamp(resources, 0f, 100f);
     }
 
+    private bool IsInDanger()
+    {
+        return targetModule != null &&
+               targetModule.State != ModuleState.Normal;
+    }
+
 }
