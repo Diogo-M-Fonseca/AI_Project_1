@@ -172,6 +172,7 @@ public class Tripulante : MonoBehaviour
         resources = Mathf.Clamp(resources, 0f, 100f);
     }
 
+    // helped by AI
     private void UpdateEmergency()
     {
         Module safeModule = FindSafeModule();
@@ -181,6 +182,16 @@ public class Tripulante : MonoBehaviour
         targetModule = safeModule;
 
         ChangeState(AgentState.Moving);
+    }
+
+    // helped by AI
+    private Module FindSafeModule()
+    {
+        Module[] safemodules = System.Array.FindAll(modules, m => m.State == ModuleState.Normal && m.HasSpace);
+
+        if(safemodules.Length == 0) return null;
+
+        return safeModules[Random.Range(0, safemodules.Length)];
     }
 
     private bool IsInDanger()
