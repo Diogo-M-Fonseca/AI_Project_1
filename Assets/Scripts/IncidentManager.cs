@@ -62,7 +62,12 @@ public class IncidentManager : MonoBehaviour
 
         if (modules.Length == 0) return;
 
-        Module randomModule = modules[Random.Range(0, modules.Length)];
+        //avoids double incidents in the same module
+        Module[] valid = System.Array.FindAll(modules, m => m.State == ModuleState.Normal);
+
+        if (valid.Length == 0) return;
+
+        Module randomModule = valid[Random.Range(0, valid.Length)];
 
         IncidentType type = (IncidentType)Random.Range(0, 3);
 

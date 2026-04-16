@@ -193,8 +193,6 @@ public class Tripulante : MonoBehaviour
     // helped by AI
     private void UpdateEmergency()
     {
-        //only finds safe module if not moving
-        if (state == AgentState.Moving) return;
 
         Module safeModule = FindSafeModule();
 
