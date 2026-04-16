@@ -13,6 +13,19 @@ public class IncidentManager : MonoBehaviour
         instance = this; 
     }
 
+    private void Update()
+    {
+        spawnTimer += Time.deltaTime;
+
+        UpdateIncidents();
+
+        if (spawnTimer > 15f)
+        {
+            spawnTimer = 0f;
+            TriggerRandomIncident()
+        }
+    }
+
 
     private void ApplyIncident(Module module, IncidentType type)
     {
@@ -76,15 +89,23 @@ public class IncidentManager : MonoBehaviour
             {
                 if (incident.Type == IncidentType.Fire)
                 {
-                    modules[i].SetState(ModuleState.Blocked)
+                    modules[i].SetState(ModuleState.Blocked);
                 }
 
                 if (incident.Type == IncidentType.OxygenLeak)
                 {
-                    modules[i].SetState(ModuleState.Dangerous)
+                    modules[i].SetState(ModuleState.Dangerous);
                 }
             }
         }
     }
 
+    private void UpdateIncidents()
+    {
+        for (int i = 0; i < incidents.Count; i++)
+        {
+            incidents[i].Tick();
+            Spread(incidents[i]);
+        }
+    }
 }
