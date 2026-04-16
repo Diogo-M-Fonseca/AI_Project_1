@@ -8,7 +8,7 @@ public class Incident
 
     public IncidentType Type { get { return type; } }
     public float Timer { get { return timer; } }
-    public Module Origi { get { return origin; } }
+    public Module Origin { get { return origin; } }
 
     public Incident(IncidentType type, Module origin)
     {

@@ -43,7 +43,7 @@ public class Tripulante : MonoBehaviour
 
         if (IsInDanger())
         {
-            ChangeState(AgentState.RespondingToIncident)
+            ChangeState(AgentState.RespondingToIncident);
         }
         switch (state)
         {
