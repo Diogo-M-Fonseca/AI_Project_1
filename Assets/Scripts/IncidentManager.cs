@@ -48,4 +48,18 @@ public class IncidentManager : MonoBehaviour
         }
     }
 
+
+    private void TriggerRandomIncident()
+    {
+        Module[] modules = FindObjectsOfType<Module>();
+
+        if (modules.Length == 0) return;
+
+        Module randomModule = modules[Random.Range(0, modules.Length)];
+
+        IncidentType type = (IncidentType)Random.Range(0. 3);
+
+        TriggerRandomIncident(type, modules);
+        
+    }
 }
