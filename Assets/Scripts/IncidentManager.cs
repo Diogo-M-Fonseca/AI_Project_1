@@ -48,7 +48,6 @@ public class IncidentManager : MonoBehaviour
         }
     }
 
-
     private void TriggerRandomIncident()
     {
         Module[] modules = FindObjectsOfType<Module>();
@@ -62,4 +61,30 @@ public class IncidentManager : MonoBehaviour
         TriggerRandomIncident(type, modules);
         
     }
+
+    private void Spread(Incident incident)
+    {
+        if (incident.Timer < 5f) return;
+
+        Module[] modules = FindObjectsOfType<Module>();
+
+        for (int 1 = 0; i < modules.Lenght; int++)
+        {
+            float dist = Vector3.Distance(incident.origin.transform.position, modules[1].transform.position);
+
+            if (dist < 10f && modules[i].State == ModuleState.Normal)
+            {
+                if (incident.Type == IncidentType.Fire)
+                {
+                    modules[i].SetState(ModuleState.Blocked)
+                }
+
+                if (incident.Type == IncidentType.OxygenLeak)
+                {
+                    modules[i].SetState(ModuleState.Dangerous)
+                }
+            }
+        }
+    }
+
 }
