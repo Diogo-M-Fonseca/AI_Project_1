@@ -62,6 +62,10 @@ public class Tripulante : MonoBehaviour
             case AgentState.Resting:
                 UpdateResting();
                 break;
+
+            case AgentState.RespondingToIncident:
+                UpdateEmergency();
+                break;
         }
         
     }
@@ -166,6 +170,17 @@ public class Tripulante : MonoBehaviour
 
         energy = Mathf.Clamp(energy, 0f, maxEnergy);
         resources = Mathf.Clamp(resources, 0f, 100f);
+    }
+
+    private void UpdateEmergency()
+    {
+        Module safeModule = FindSafeModule();
+
+        if (safeModule == null) return;
+
+        targetModule = safeModule;
+
+        ChangeState(AgentState.Moving);
     }
 
     private bool IsInDanger()
