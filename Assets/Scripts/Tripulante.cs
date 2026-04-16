@@ -19,6 +19,7 @@ public class Tripulante : MonoBehaviour
 
     private float energy = 100f;
     private float resources = 0f;
+    private float greenNeed = 100f;
 
     private const float maxEnergy = 100f;
 
@@ -144,9 +145,11 @@ public class Tripulante : MonoBehaviour
 
         if (energy < 30f)
             targetType = ModuleType.Habitat;
-        else if (resources > 60f)
+        else if (resources < 60f)
             targetType = ModuleType.Storage;
-        else
+        else if (greenNeed < 40f)
+            targetType = ModuleType.Storage;
+        else 
             targetType = ModuleType.Laboratory;
 
         Module[] options = System.Array.FindAll(modules,
@@ -188,6 +191,8 @@ public class Tripulante : MonoBehaviour
 
         energy = Mathf.Clamp(energy, 0f, maxEnergy);
         resources = Mathf.Clamp(resources, 0f, 100f);
+        greenNeed -= Time.deltaTime * 1.5f;
+        greenNeed = Mathf.Clamp(greenNeed, 0f, 100f);
     }
 
     // helped by AI
