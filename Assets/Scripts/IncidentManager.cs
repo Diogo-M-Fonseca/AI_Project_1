@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class IncidentManager : MonoBehaviour
 {
@@ -22,7 +23,7 @@ public class IncidentManager : MonoBehaviour
         if (spawnTimer > 15f)
         {
             spawnTimer = 0f;
-            TriggerRandomIncident()
+            TriggerRandomIncident();
         }
     }
 
@@ -53,13 +54,6 @@ public class IncidentManager : MonoBehaviour
         ApplyIncident(module, type);
     }
 
-    private void UpdateIncidents()
-    {
-        for (int i = 0; i < incidents.Count; i++)
-        {
-            incidents[i].Tick();
-        }
-    }
 
     private void TriggerRandomIncident()
     {
@@ -69,9 +63,9 @@ public class IncidentManager : MonoBehaviour
 
         Module randomModule = modules[Random.Range(0, modules.Length)];
 
-        IncidentType type = (IncidentType)Random.Range(0. 3);
+        IncidentType type = (IncidentType)Random.Range(0, 3);
 
-        TriggerRandomIncident(type, modules);
+        TriggerIncident(type, randomModule);
         
     }
 
@@ -81,9 +75,9 @@ public class IncidentManager : MonoBehaviour
 
         Module[] modules = FindObjectsOfType<Module>();
 
-        for (int 1 = 0; i < modules.Lenght; int++)
+        for (int i = 0; i < modules.Length; i++)
         {
-            float dist = Vector3.Distance(incident.origin.transform.position, modules[1].transform.position);
+            float dist = Vector3.Distance(incident.Origin.transform.position, modules[i].transform.position);
 
             if (dist < 10f && modules[i].State == ModuleState.Normal)
             {
