@@ -41,6 +41,10 @@ public class Tripulante : MonoBehaviour
         timer += Time.deltaTime;
         UpdateNeeds();
 
+        if (IsInDanger())
+        {
+            ChangeState(AgentState.RespondingToIncident)
+        }
         switch (state)
         {
             case AgentState.Idle:
