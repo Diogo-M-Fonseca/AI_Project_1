@@ -87,6 +87,7 @@ public class Tripulante : MonoBehaviour
         //stops moving if target becomes danger or blocked
         if (targetModule.State != ModuleState.Normal)
         {
+            agent.ResetPath();
             ChangeState(AgentState.Idle);
             return;
         }
@@ -110,6 +111,12 @@ public class Tripulante : MonoBehaviour
     {
         //avoid loop
         if (state == novoEstado) return;
+
+        if (state == AgentState.Moving)
+        {
+            agent.ResetPath();
+            Move(targetModule);
+        }
 
         //agent only exits modules after it has stoped moving
         if (targetModule != null && state != AgentState.Moving)
