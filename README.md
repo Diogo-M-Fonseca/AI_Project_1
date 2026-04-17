@@ -148,3 +148,33 @@ IM -->|evacuation signal| T
 IM -->|evacuation signal| R
 ```
 
+## Resultados e discussão
+
+Como está neste momento o projecto funciona apesar de incompleto, os tripulantes procuram o modulo adequado para realizar as suas tarefas e escolhem qual tarefa realizar de acordo com as suas necessidades, os robos procuram modulos para arranjar, evitam arranjar um modulo que já esteja a ser arranjado e procuram por um lucal para carregar baterias quando estas estão perto de acabar, se muitos incidentes forem criados os tripulantes tentam evacuar. 
+
+O projecto está incompleto porque os incidentes não são espalhados correctamente pois não afetam corredores, em simulações com muitos tripulantes nota se pouco pensamento diferenciado pois os parametros iniciais de todos os tripulantes são iguais, ou seja todos eles querem fazer as mesmas coisas ao mesmo tempo, infelizmente não consegui implementar um limitador que impeça tripulantes e robos de exceder a lotação maxima de cada modulo e não consegui implementar algo que fizesse com que os robos dentro do modulo técnico procorassem locais especificos para carregarem, e deveria ter implementado um estado de "roaming" para conseguir ver os robos a movimentarem se mesmo se não houver um incidente a acontecer.
+
+Gostaria de ter implementado também "serializações" dos parametros para facilitar a utilização, tal como um ui simples para conseguir ver o numero de tripulantes que morreu e o numero que conseguio fugir.
+
+Em simulações menores é mais facil ver comportamento inteligente por parte dos tripulantes, mas a simulação não crashou com o numero de agentes pedidos no enunciado.
+
+Infelizmente não implementei maneira "serializada" de mudar quantos tripulantes e quantos robos aparecem na simulação.
+
+## Conclusões 
+
+Este projeto apresenta uma simulação de uma colónia marciana baseada em agentes autónomos, com tripulantes e robôs a interagir com diferentes módulos e a reagir a incidentes como incêndios, fugas de oxigénio e falhas elétricas.
+
+Os resultados mostram que os agentes conseguem escolher e fazer ações normais e adaptar as suas decisões em situações de emergência, incluindo resposta a incidentes e evacuação da base. O sistema de incidentes contribuem para um comportamento mais dinâmico.
+
+Em termos gerais, o projeto segue abordagens de simulação multi-agente e FSM, onde o comportamento e interação entre agentes é afectado pelo ambiente e eventos.
+
+## Agradecimentos 
+
+- Lisa Carvalho - nº a22405414 - ajudou me com a reorganização do meu projecto quando começei a confundir tudo no meu código esparguete
+- Gonçalo Gonçalves - aluno de enegenharia informatica da universidade de lisboa que ajudou me com algumas partes mais complicadas do meu projecto
+
+## Referencias 
+
+- Unity Technologies. (2024). NavMesh Components and Navigation System.
+- The Shaggy Dev. (2017). An introduction to finite state machines and the state pattern for game development [Vídeo]. YouTube. https://www.youtube.com/watch?v=-ZP2Xm-mY4E
+- iHeartGameDev. (2022). How to Program in Unity: State Machines Explained [Vídeo]. YouTube.https://www.youtube.com/watch?v=Vt8aZDPzRjI
