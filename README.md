@@ -124,52 +124,68 @@ Os agentes tentam sempre agir de acordo com os incidentes ativos
 Aqui se segue um flowchart do projecto
 
 ```mermaid
-flowchart TD
+graph TD
 
-    %% Agents
-    T[Tripulante]
-    R[Robo]
+%% =====================
+%% ENTIDADES PRINCIPAIS
+%% =====================
 
-    %% Environment
-    M[Module]
-    IM[IncidentManager]
-    I[Incident]
+T[Tripulante]
+R[Robo]
+M[Module]
+IM[IncidentManager]
+I[Incident]
 
-    %% --- Tripulante flow ---
-    T -->|PickNextTask()| M
-    T -->|Move / Enter / Exit| M
-    T -->|IsInDanger()| M
-    T -->|Evacuate()| M
+%% =====================
+%% TRIPULANTE
+%% =====================
 
-    %% --- Robo flow ---
-    R -->|PickTask()| M
-    R -->|TryAssign()| M
-    R -->|Repair()| M
-    R -->|SetDestination| M
+T -->|PickNextTask / Move| M
+T -->|Enter / Exit| M
+T -->|Check State (Danger)| M
+T -->|Evacuation| M
 
-    %% --- Module internal role ---
-    M -->|HasSpace / State check| T
-    M -->|HasSpace / State check| R
-    M -->|Enter / Exit tracking| T
-    M -->|Enter / Exit tracking| R
+%% =====================
+%% ROBO
+%% =====================
 
-    %% --- Incident system ---
-    IM -->|TriggerIncident()| I
-    IM -->|ApplyIncident()| M
-    IM -->|Spread()| M
-    IM -->|UpdateIncidents()| I
+R -->|PickTask| M
+R -->|TryAssign (avoid duplicate repair)| M
+R -->|Repair Module| M
+R -->|Move (NavMesh)| M
 
-    %% --- Incident feedback loop ---
-    I -->|Timer + Origin| IM
-    M -->|State changes (Fire / O2 / Power)| T
-    M -->|State changes| R
+%% =====================
+%% MODULE
+%% =====================
 
-    %% --- Global effects ---
-    IM -->|EvacuationActive| T
-    IM -->|EvacuationActive| R
+M -->|State (Normal / Fire / O2 / Power)| T
+M -->|State affects behavior| R
+M -->|HasSpace (capacity control)| T
+M -->|HasSpace (capacity control)| R
 
-    %% --- Danger reactions ---
-    T -->|RespondingToIncident| M
-    R -->|RespondingToIncident| M
+%% =====================
+%% INCIDENT SYSTEM
+%% =====================
+
+IM -->|Create Incident| I
+IM -->|Apply Incident| M
+IM -->|Spread Incident| M
+IM -->|Update / Tick| I
+
+I -->|Origin + Timer| IM
+
+%% =====================
+%% EVACUATION SYSTEM
+%% =====================
+
+IM -->|EvacuationActive| T
+IM -->|EvacuationActive| R
+
+%% =====================
+%% REACTIONS
+%% =====================
+
+T -->|RespondingToIncident| M
+R -->|RespondingToIncident| M
 ```
 
