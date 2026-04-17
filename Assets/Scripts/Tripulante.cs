@@ -46,6 +46,12 @@ public class Tripulante : MonoBehaviour
         {
             ChangeState(AgentState.RespondingToIncident);
         }
+
+        if (IncidentManager.EvacuationActive && state != AgentState.Evacuating)
+        {
+            ChangeState(AgentState.Evacuating);
+        }
+
         switch (state)
         {
             case AgentState.Idle:
@@ -67,6 +73,10 @@ public class Tripulante : MonoBehaviour
             case AgentState.RespondingToIncident:
                 UpdateEmergency();
                 break;
+
+            case AgentState.Evacuating:
+                Evacuate();
+                break;
         }
         
     }
@@ -85,7 +95,8 @@ public class Tripulante : MonoBehaviour
 
     private void UpdateMoving()
     {
-        //stops moving if target becomes danger or blocked
+        if (targetModule == null) return;
+
         if (targetModule.State != ModuleState.Normal)
         {
             agent.ResetPath();
@@ -116,6 +127,11 @@ public class Tripulante : MonoBehaviour
         if (state == AgentState.Moving)
         {
             agent.ResetPath();
+        }
+
+        if (novoEstado == AgentState.Evacuating)
+        {
+            targetModule = null;
         }
 
         //agent only exits modules after it has stoped moving
@@ -225,6 +241,37 @@ public class Tripulante : MonoBehaviour
 
         return targetModule.State == ModuleState.Fire ||
                targetModule.State == ModuleState.NoOxigen;
+    }
+
+    private Module FindEscapeModule()
+    {
+        Module[] escapes = System.Array.FindAll(modules,
+            m => m.Type == ModuleType.Escape &&
+             m.State == ModuleState.Normal);
+
+        if (escapes.Length == 0) return null;
+
+        return escapes[Random.Range(0, escapes.Length)];
+    }
+
+    private void Evacuate()
+    {
+        if (targetModule == null)
+        {
+            targetModule = FindEscapeModule();
+
+            if (targetModule != null)
+            {
+                agent.SetDestination(targetModule.transform.position);
+            }
+            return;
+        }
+
+        if (agent.pathPending) return;
+        if (agent.remainingDistance < 1f)
+        {
+            gameObject.SetActive(false);
+        }
     }
 
 }

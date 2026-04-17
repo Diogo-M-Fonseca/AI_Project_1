@@ -7,6 +7,10 @@ public class IncidentManager : MonoBehaviour
 
     private List<Incident> incidents = new List<Incident>();
 
+    private bool evacuation;
+    public static bool EvacuationActive => instance != null && instance.evacuation;
+
+
     private float spawnTimer;
 
     private void Awake () 
@@ -24,6 +28,11 @@ public class IncidentManager : MonoBehaviour
         {
             spawnTimer = 0f;
             TriggerRandomIncident();
+        }
+
+        if (!evacuation && incidents.Count >4)
+        {
+            evacuation = true;
         }
     }
 
@@ -83,6 +92,7 @@ public class IncidentManager : MonoBehaviour
 
         for (int i = 0; i < modules.Length; i++)
         {
+            if (modules[i].IsEscape) continue;
             float dist = Vector3.Distance(incident.Origin.transform.position, modules[i].transform.position);
 
             if (dist < 10f && modules[i].State == ModuleState.Normal && !modules[i].RecentlyRepaired)

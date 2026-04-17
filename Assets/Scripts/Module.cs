@@ -8,6 +8,7 @@ public enum ModuleType
     GreenHouse,
     Laboratory,
     Storage,
+    Escape,
     Technical
 }
 
@@ -23,6 +24,9 @@ public class Module : MonoBehaviour
 {
     [SerializeField] private ModuleType type;
     [SerializeField] private int capacity = 10;
+    [SerializeField] private bool isEscape;
+
+    public bool IsEscape => isEscape;
 
     private Renderer renderer;
     private Color originalColor;
@@ -67,6 +71,8 @@ public class Module : MonoBehaviour
 
     public void SetState(ModuleState newState)
     {
+        if (isEscape) return;
+
         state = newState;
         Debug.Log("Module state changed to: " + newState);
         VisualChanger();
