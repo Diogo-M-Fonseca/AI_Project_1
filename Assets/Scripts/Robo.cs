@@ -37,10 +37,15 @@ public class Robo : MonoBehaviour
                 break;
 
             case AgentState.Moving:
+                UpdateMoving();
                 break;
 
             case AgentState.Charging:
                 ChangeBattery();
+                break;
+
+            case AgentState.RespondingToIncident:
+                //Repair
                 break;
         }
     }
@@ -78,7 +83,8 @@ public class Robo : MonoBehaviour
     {
         if (targetModule == null) return;
 
-        if (newState == AgentState.Moving || newState == AgentState.Charging)
+        if (novoEstado == AgentState.Moving || novoEstado == AgentState.Charging 
+            || novoEstado == AgentState.RespondingToIncident)
         {
             agent.SetDestination(targetModule.transform.position);
         }
@@ -94,8 +100,10 @@ public class Robo : MonoBehaviour
 
         if (targetModule.State != ModuleState.Normal)
         {
-            //futuramente reparar o modulo
+            ChangeState(AgentState.RespondingToIncident);
+            return;
         }
+
         ChangeState(AgentState.Idle);
     }
 
@@ -148,6 +156,22 @@ public class Robo : MonoBehaviour
 
         if (battery >= maxBattery)
         {
+            ChangeState(AgentState.Idle);
+        }
+    }
+
+    private void Repair()
+    {
+        if (targetModule == null) return;
+        if (agent.pathPending) return;
+        if (agent.remainingDistance > 1f) return;
+
+        repairTimer += Time.deltaTime;
+
+        if (repairTimer > 3f)
+        {
+            targetModule.SetState(ModuleState.Normal);
+
             ChangeState(AgentState.Idle);
         }
     }
