@@ -21,19 +21,51 @@ Como o nome indica este projecto tenta simular uma colónia marciana com agentes
 
 Esta simulação foi desenvolvida em Unity 3d com os assets 3d nativos do unity (planes, cylinders, spheres, etc).
 
+### Sistema de Modulos
+
 Esta simulação tem um sistema de Módulos, os módulos representam as salas da colónia marciana onde os agentes executam as suas tarefas, ou seja definem tanto o espaço navegável quanto as regras das ações dos agentes
 
-O projecto tem um Enum com os tipos de modulo esses tipos definem as interações que os agentes conseguem ter neles, esses tipos são: Habitat, Laboratory, GreenHouse, Storage, Technical e Escape
+O projecto tem um Enum com os tipos de modulo esses tipos definem as interações que os agentes conseguem ter neles, esses tipos 
+são: 
+- Habitat
+- Laboratory
+- GreenHouse
+- Storage
+- Technical 
+- Escape
 
-O projecto tem também um enum com cada tipo de estado que um módulo pode estar dependendo do incidente que o afeta, esse estado é mudado quando um incidente é ativado ou desativado em cada modulo, esses estados são: Normal, Fire, NoOxigen, NoPower
+O projecto tem também um enum com cada tipo de estado que um módulo pode estar dependendo do incidente que o afeta, esse estado é mudado quando um incidente é ativado ou desativado em cada modulo, esses estados 
+são: 
+- Normal
+- Fire
+- NoOxigen
+- NoPower
 
 Eu implementei os modulos criando uma classe chamada Module onde se define o tipo e estado de cada modulo, tenta se defenir uma capacidade de agentes maxima, verifica-se entrada e saida de agentes, faz-se atribuição de robos (garante-se que apenas um robo por vez pode arranjar o mesmo modulo), tenta dar proteção contra incidentes aos modulos de escape, adiciona um cooldown quando arranjado que impede de ser afetado por um incidente imediatamente após ser arranjado, 
 
-A navegação dos agentes é feita marioritariamente com NavMesh para garantir que os agentes evitariam paredes, limites e obstáculos, esse sistema facilita bastante o trabalho pois permite me utilizar de algoritmos de navegação pre feitos do unity em vez de ter que desenvolver os meus próprios. 
+### Navegação de agentes
+
+A navegação dos agentes é feita com NavMesh para garantir que os agentes evitariam paredes, limites e obstáculos, esse sistema facilita bastante o trabalho pois permite me utilizar de algoritmos de navegação pre feitos do unity em vez de ter que desenvolver os meus próprios. 
 
 Os Agentes são divididos em duas categorias: Tripulantes e robos
 
-Os tripulantes têm como necessidades dinamicas Energia, Recursos e "Necessidade de verde" estas necessidades começam com valores fixos e vão decrescendo continuamente a velocidades diferentes, o tripulante verifica o valor destas necessidades e age de acordo, dando sempre prioridade á energia, essas ações consistem de se locomover para um modulo especifico e reabastecer essa necessidade, cada necessidade corresponde a um módulo, Energia só consegue ser reabastecida nas habitações, Recursos só podem ser reabastecidos no armazém, necessidade de verde só pode ser reabastecida na estufa e caso nenhuma necessidade esteja baixa o suficiente o tripulante irá para um laboratório trabalhar, caso um numero grande de incidentes esteja ativo o tripulante começa a evacuar, a ação de evacuação consiste de se movimentar para o modulo de saida, após chegar a esse módulo o GameObject do tripulante é desativado
+### Tripulantes
+
+Os tripulantes têm como necessidades dinamicas:
+
+- Energia
+- Recursos  
+- "Necessidade de verde"
+ 
+estas necessidades começam com valores fixos e vão decrescendo continuamente a velocidades diferentes, o tripulante verifica o valor destas necessidades e age de acordo, dando sempre prioridade á energia, essas ações consistem de se locomover para um modulo especifico e reabastecer essa necessidade, cada necessidade corresponde a um módulo: 
+
+- Energia só consegue ser reabastecida nas habitações
+- Recursos só podem ser reabastecidos no armazém 
+- Necessidade de verde só pode ser reabastecida na estufa
+- Caso nenhuma necessidade esteja baixa o suficiente o tripulante irá para um laboratório trabalhar 
+- Caso um numero grande de incidentes esteja ativo o tripulante começa a evacuar
+
+A ação de evacuação consiste de se movimentar para o modulo de saida, após chegar a esse módulo o GameObject do tripulante é desativado
 
 Os tripulantes têm um valor de Vida que ao passar por um módulo com o incidente Fogo ou Falta de Oxigénio desce, se chegar a zero o GameObject do tripulante é destruido
 
@@ -70,6 +102,8 @@ stateDiagram-v2
 ```
 
 O script dos tripulantes foi um dos mais complicados de trabalhar neste projecto, acho que deveria ter dividido as suas funções em diferentes scripts para evitar este script enorme que á minima mudança deixa de funciona, admito também que poderia ter tido mais atenção aos principios SOLID e/ou utilizado de um design patter diferente neste projecto para facilitar o meu trabalho
+
+### Robos
 
 Os robos têm apenas uma necessidade dinamica, Bateria, caso o valor dessa necessidade seja demasiado pequeno o robo irá mover-se para um modulo técnico e irá carregar a bateria continuamente, no entantanto as ações dos robos não se limitam a reabastecer essa necessidade dinamica, os robos analisam os modulos da simulação e caso encontrem algum com icidente ativo movem se até esse modulo e arranjam-no retirando assim o incidente
 
@@ -108,6 +142,7 @@ Os robos não têm qualquer sistema de vida e mesmo em situação de evacuação
 
 O script dos robos já foi menos complicado que o dos tripulantes justamente por ser uma versão alterada do mesmo script, o problema disso foi muitos dos problemas de design de código de um script passou para o outro, efetivamente em vez de fazer um script para robos fiz um script de um tripulante robotizado
 
+### Incidentes
 
 O sistema de incidentes desta simulação introdus eventos dinamicos que afetam a maneira como os agentes fazem as suas decisões
 
@@ -171,10 +206,11 @@ Em termos gerais, o projeto segue abordagens de simulação multi-agente e FSM, 
 ## Agradecimentos 
 
 - Lisa Carvalho - nº a22405414 - ajudou me com a reorganização do meu projecto quando começei a confundir tudo no meu código esparguete
-- Gonçalo Gonçalves - aluno de enegenharia informatica da universidade de lisboa que ajudou me com algumas partes mais complicadas do meu projecto
+- Gonçalo Gonçalves - Engenheira Informática e de Computadores no ISEL que ajudou me com algumas partes mais complicadas do meu projecto
 
 ## Referencias 
 
 - Unity Technologies. (2024). NavMesh Components and Navigation System.
 - The Shaggy Dev. (2017). An introduction to finite state machines and the state pattern for game development [Vídeo]. YouTube. https://www.youtube.com/watch?v=-ZP2Xm-mY4E
 - iHeartGameDev. (2022). How to Program in Unity: State Machines Explained [Vídeo]. YouTube.https://www.youtube.com/watch?v=Vt8aZDPzRjI
+- A utilização de ai foi mantida ao minimo possivel com todas as utilizações de código substancial sendo referidas como tal no proprio código
