@@ -27,6 +27,10 @@ public class Module : MonoBehaviour
     private Renderer renderer;
     private Color originalColor;
 
+    private GameObject roboWorking;
+
+    public bool IsAssigned => roboWorking != null;
+
     private ModuleState state = ModuleState.Normal;
 
     private List<GameObject> agentsInside = new List<GameObject>();
@@ -86,5 +90,18 @@ public class Module : MonoBehaviour
                 renderer.material.color = Color.Lerp(originalColor, Color.black, 0.7f);
                 break;
         }
+    }
+
+    public bool TryAssign(GameObject robot)
+    {
+        if (roboWorking != null) return false;
+
+        roboWorking = robot;
+        return true;
+    }
+
+    public void Release()
+    {
+        roboWorking = null;
     }
 }

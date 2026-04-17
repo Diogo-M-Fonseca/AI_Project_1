@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.AI;
-using System;
 
 public class Robo : MonoBehaviour
 {
@@ -12,6 +11,8 @@ public class Robo : MonoBehaviour
 
     private float battery = 100f;
     private float maxBattery = 100f;
+
+    private float repairTimer;
 
     private float timer;
 
@@ -41,11 +42,11 @@ public class Robo : MonoBehaviour
                 break;
 
             case AgentState.Charging:
-                ChangeBattery();
+                Charging();
                 break;
 
             case AgentState.RespondingToIncident:
-                //Repair
+                Repair();
                 break;
         }
     }
@@ -54,14 +55,20 @@ public class Robo : MonoBehaviour
     private void ChangeBattery()
     {
         battery -= Time.deltaTime * 1.5f;
-
-        battery -= Time.deltaTime * 1.5f;
         battery = Mathf.Clamp(battery, 0f, maxBattery);
 
         if (battery < 20f && state != AgentState.Charging)
         {
             targetModule = FindChargingStation();
-             ChangeState(AgentState.Charging)  
+
+            if (targetModule != null)
+            {
+                ChangeState(AgentState.Charging);
+            }
+            else
+            {
+                ChangeState(AgentState.Idle); // fallback
+            }
         }
     }
 
@@ -74,9 +81,10 @@ public class Robo : MonoBehaviour
             agent.ResetPath();
         }
 
-        state = novoEstado
+        state = novoEstado;
+        repairTimer = 0f;
 
-        OnEnterState(novoEstado)
+        OnEnterState(novoEstado);
     }
 
     private void OnEnterState(AgentState novoEstado)
@@ -113,9 +121,13 @@ public class Robo : MonoBehaviour
 
         if (problem != null)
         {
-            targetModule = problem;
-            ChangeState(AgentState.Moving);
-            return;
+            if (problem.TryAssign(gameObject))
+            {
+                targetModule = problem;
+                ChangeState(AgentState.Moving);
+                return;
+            }
+            
         }
 
         targetModule = FindChargingStation();
@@ -136,7 +148,7 @@ public class Robo : MonoBehaviour
     private Module FindProblemModule()
     {
         Module[] problematic = System.Array.FindAll(modules,
-            m => m.State != ModuleState.Normal);
+            m => m.State != ModuleState.Normal && !m.IsAssigned);
 
         if (problematic.Length == 0) return null;
 
@@ -171,6 +183,10 @@ public class Robo : MonoBehaviour
         if (repairTimer > 3f)
         {
             targetModule.SetState(ModuleState.Normal);
+
+            targetModule.Release();
+
+            repairTimer = 0f;
 
             ChangeState(AgentState.Idle);
         }
