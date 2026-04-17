@@ -126,66 +126,25 @@ Aqui se segue um flowchart do projecto
 ```mermaid
 graph TD
 
-%% =====================
-%% ENTIDADES PRINCIPAIS
-%% =====================
-
 T[Tripulante]
 R[Robo]
 M[Module]
 IM[IncidentManager]
 I[Incident]
 
-%% =====================
-%% TRIPULANTE
-%% =====================
+T -->|move and task selection| M
+R -->|repair and charging| M
 
-T -->|PickNextTask / Move| M
-T -->|Enter / Exit| M
-T -->|Check State (Danger)| M
-T -->|Evacuation| M
+M -->|state normal or danger| T
+M -->|state normal or danger| R
 
-%% =====================
-%% ROBO
-%% =====================
+IM -->|creates incident| I
+IM -->|applies incident| M
+IM -->|spreads incident| M
 
-R -->|PickTask| M
-R -->|TryAssign (avoid duplicate repair)| M
-R -->|Repair Module| M
-R -->|Move (NavMesh)| M
+I -->|updates time| IM
 
-%% =====================
-%% MODULE
-%% =====================
-
-M -->|State (Normal / Fire / O2 / Power)| T
-M -->|State affects behavior| R
-M -->|HasSpace (capacity control)| T
-M -->|HasSpace (capacity control)| R
-
-%% =====================
-%% INCIDENT SYSTEM
-%% =====================
-
-IM -->|Create Incident| I
-IM -->|Apply Incident| M
-IM -->|Spread Incident| M
-IM -->|Update / Tick| I
-
-I -->|Origin + Timer| IM
-
-%% =====================
-%% EVACUATION SYSTEM
-%% =====================
-
-IM -->|EvacuationActive| T
-IM -->|EvacuationActive| R
-
-%% =====================
-%% REACTIONS
-%% =====================
-
-T -->|RespondingToIncident| M
-R -->|RespondingToIncident| M
+IM -->|evacuation signal| T
+IM -->|evacuation signal| R
 ```
 
