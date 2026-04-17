@@ -31,6 +31,9 @@ public class Module : MonoBehaviour
 
     public bool IsAssigned => roboWorking != null;
 
+    private float repaircooldown = 0f;
+    public bool RecentlyRepaired => Time.time < repaircooldown;
+
     private ModuleState state = ModuleState.Normal;
 
     private List<GameObject> agentsInside = new List<GameObject>();
@@ -104,4 +107,10 @@ public class Module : MonoBehaviour
     {
         roboWorking = null;
     }
+
+    public void Repaired()
+    {
+        repaircooldown = Time.time + 16f;
+    }
+
 }

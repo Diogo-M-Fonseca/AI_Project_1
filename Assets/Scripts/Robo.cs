@@ -54,7 +54,7 @@ public class Robo : MonoBehaviour
 
     private void ChangeBattery()
     {
-        battery -= Time.deltaTime * 1.5f;
+        battery -= Time.deltaTime;
         battery = Mathf.Clamp(battery, 0f, maxBattery);
 
         if (battery < 20f && state != AgentState.Charging)
@@ -183,6 +183,8 @@ public class Robo : MonoBehaviour
         if (repairTimer > 3f)
         {
             targetModule.SetState(ModuleState.Normal);
+
+            targetModule.Repaired();
 
             targetModule.Release();
 

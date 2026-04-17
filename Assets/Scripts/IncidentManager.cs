@@ -85,7 +85,7 @@ public class IncidentManager : MonoBehaviour
         {
             float dist = Vector3.Distance(incident.Origin.transform.position, modules[i].transform.position);
 
-            if (dist < 10f && modules[i].State == ModuleState.Normal)
+            if (dist < 10f && modules[i].State == ModuleState.Normal && !modules[i].RecentlyRepaired)
             {
                 if (incident.Type == IncidentType.Fire)
                 {
