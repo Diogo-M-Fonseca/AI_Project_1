@@ -19,7 +19,15 @@ Como o nome indica este projecto tenta simular uma colónia marciana com agentes
 
 ## Metodologia
 
-Esta simulação foi desenvolvida em Unity 3d com os assets 3d nativos do unity (planes, cylinders, spheres, etc). 
+Esta simulação foi desenvolvida em Unity 3d com os assets 3d nativos do unity (planes, cylinders, spheres, etc).
+
+Esta simulação tem um sistema de Módulos, os módulos representam as salas da colónia marciana onde os agentes executam as suas tarefas, ou seja definem tanto o espaço navegável quanto as regras das ações dos agentes
+
+O projecto tem um Enum com os tipos de modulo esses tipos definem as interações que os agentes conseguem ter neles, esses tipos são: Habitat, Laboratory, GreenHouse, Storage, Technical e Escape
+
+O projecto tem também um enum com cada tipo de estado que um módulo pode estar dependendo do incidente que o afeta, esse estado é mudado quando um incidente é ativado ou desativado em cada modulo, esses estados são: Normal, Fire, NoOxigen, NoPower
+
+Eu implementei os modulos criando uma classe chamada Module onde se define o tipo e estado de cada modulo, tenta se defenir uma capacidade de agentes maxima, verifica-se entrada e saida de agentes, faz-se atribuição de robos (garante-se que apenas um robo por vez pode arranjar o mesmo modulo), tenta dar proteção contra incidentes aos modulos de escape, adiciona um cooldown quando arranjado que impede de ser afetado por um incidente imediatamente após ser arranjado, 
 
 A navegação dos agentes é feita marioritariamente com NavMesh para garantir que os agentes evitariam paredes, limites e obstáculos, esse sistema facilita bastante o trabalho pois permite me utilizar de algoritmos de navegação pre feitos do unity em vez de ter que desenvolver os meus próprios. 
 
@@ -94,5 +102,74 @@ stateDiagram-v2
     Repair --> Idle : Repair completed
 
     RespondingToIncident --> Idle : Target lost / invalid
+```
+
+Os robos não têm qualquer sistema de vida e mesmo em situação de evacuação eles continuam a trabalhar normalmente para tentar conter os incidentes
+
+O script dos robos já foi menos complicado que o dos tripulantes justamente por ser uma versão alterada do mesmo script, o problema disso foi muitos dos problemas de design de código de um script passou para o outro, efetivamente em vez de fazer um script para robos fiz um script de um tripulante robotizado
+
+
+O sistema de incidentes desta simulação introdus eventos dinamicos que afetam a maneira como os agentes fazem as suas decisões
+
+No enunciado pede para que os incidentes afetem tanto modulos quanto corredores mas infelizmente neste projecto apenas consegui implementar nos módulos 
+
+Eu implementei o sistema através de duas classes: IncidentManager e Incident
+
+Incident é uma classe que guarda as informações essenciais de um incidente o seu tipo a sua origem e á quanto tempo está ativo
+
+O IncidentManager é um singleton que controla os efeitos e propagação dos incidentes, ele tem uma lista de todos os incidentes ativos e gere a criação de incidentes a sua propagação e a condição de evacuação, um incidente aleatório é criado num modulo aleatório a cada 15 segundos, inicialmente eu queria que fosse em intrevalos de tempos aleatórios mas é mais facil testar certas coisas se for em intrevalos de tempo constantes.
+
+Os agentes tentam sempre agir de acordo com os incidentes ativos
+
+Aqui se segue um flowchart do projecto
+
+```mermaid
+flowchart TD
+
+    %% Agents
+    T[Tripulante]
+    R[Robo]
+
+    %% Environment
+    M[Module]
+    IM[IncidentManager]
+    I[Incident]
+
+    %% --- Tripulante flow ---
+    T -->|PickNextTask()| M
+    T -->|Move / Enter / Exit| M
+    T -->|IsInDanger()| M
+    T -->|Evacuate()| M
+
+    %% --- Robo flow ---
+    R -->|PickTask()| M
+    R -->|TryAssign()| M
+    R -->|Repair()| M
+    R -->|SetDestination| M
+
+    %% --- Module internal role ---
+    M -->|HasSpace / State check| T
+    M -->|HasSpace / State check| R
+    M -->|Enter / Exit tracking| T
+    M -->|Enter / Exit tracking| R
+
+    %% --- Incident system ---
+    IM -->|TriggerIncident()| I
+    IM -->|ApplyIncident()| M
+    IM -->|Spread()| M
+    IM -->|UpdateIncidents()| I
+
+    %% --- Incident feedback loop ---
+    I -->|Timer + Origin| IM
+    M -->|State changes (Fire / O2 / Power)| T
+    M -->|State changes| R
+
+    %% --- Global effects ---
+    IM -->|EvacuationActive| T
+    IM -->|EvacuationActive| R
+
+    %% --- Danger reactions ---
+    T -->|RespondingToIncident| M
+    R -->|RespondingToIncident| M
 ```
 
