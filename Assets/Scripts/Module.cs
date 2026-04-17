@@ -118,4 +118,9 @@ public class Module : MonoBehaviour
         repaircooldown = Time.time + 5f;
     }
 
+    private void OnDestroy()
+    {
+        agentsInside.Clear();
+    }
+
 }

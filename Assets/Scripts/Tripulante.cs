@@ -43,6 +43,8 @@ public class Tripulante : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (health <= 0f) return;
+
         timer += Time.deltaTime;
         UpdateNeeds();
         UpdateHealth();
@@ -113,13 +115,15 @@ public class Tripulante : MonoBehaviour
 
         if (agent.remainingDistance < 1f)
         {
-            // entrou no módulo
-            targetModule.Enter(gameObject);
-
-            if (targetModule.Type == ModuleType.Habitat)
-                ChangeState(AgentState.Resting);
-            else
-                ChangeState(AgentState.Working);
+           
+          if (targetModule.State == ModuleState.Normal)
+          {
+              targetModule.Enter(gameObject);
+          }
+              if (targetModule.Type == ModuleType.Habitat)
+                  ChangeState(AgentState.Resting);
+              else
+                   ChangeState(AgentState.Working);
         }
     }
 
@@ -266,17 +270,15 @@ public class Tripulante : MonoBehaviour
             targetModule = FindEscapeModule();
 
             if (targetModule != null)
-            {
                 agent.SetDestination(targetModule.transform.position);
-            }
+
             return;
         }
 
         if (agent.pathPending) return;
-        if (agent.remainingDistance < 1f)
-        {
-            gameObject.SetActive(false);
-        }
+        if (agent.remainingDistance > 1f) return;
+
+        gameObject.SetActive(false);
     }
 
     private void UpdateHealth()
