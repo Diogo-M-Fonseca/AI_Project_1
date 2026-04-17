@@ -22,6 +22,11 @@ public class IncidentManager : MonoBehaviour
     {
         spawnTimer += Time.deltaTime;
 
+        if (!evacuation && incidents.Count > 4)
+        {
+            evacuation = true;
+        }
+
         UpdateIncidents();
 
         if (spawnTimer > 15f)
@@ -30,15 +35,13 @@ public class IncidentManager : MonoBehaviour
             TriggerRandomIncident();
         }
 
-        if (!evacuation && incidents.Count >4)
-        {
-            evacuation = true;
-        }
     }
 
 
     private void ApplyIncident(Module module, IncidentType type)
     {
+        if (module.IsEscape) return;
+
         switch (type)
         {
             case IncidentType.Fire:

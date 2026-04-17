@@ -6,6 +6,10 @@ public class Tripulante : MonoBehaviour
 {
     private NavMeshAgent agent;
 
+    private float health = 100f;
+    private const float maxHealth = 100f;
+
+
     //current estado
     private AgentState state;
 
@@ -41,6 +45,7 @@ public class Tripulante : MonoBehaviour
     {
         timer += Time.deltaTime;
         UpdateNeeds();
+        UpdateHealth();
 
         if (IsInDanger())
         {
@@ -274,4 +279,36 @@ public class Tripulante : MonoBehaviour
         }
     }
 
+    private void UpdateHealth()
+    {
+        if (targetModule == null) return;
+
+        switch (targetModule.State)
+        {
+            case ModuleState.Fire:
+                health -= Time.deltaTime * 30f;
+                break;
+            case ModuleState.NoOxigen:
+                health -= Time.deltaTime * 15f;
+                break;
+        }
+
+        health = Mathf.Clamp(health, 0f, maxHealth);
+
+        if (health <= 0f)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        Debug.Log("Tripulante morreu");
+
+        if (targetModule != null)
+        {
+            targetModule.Exit(gameObject);
+        }
+        Destroy(gameObject);
+    }
 }

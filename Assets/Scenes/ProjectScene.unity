@@ -2942,7 +2942,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b8a7b3ec06dbe5419f966be22eff3ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Module
-  type: 4
+  type: 5
   capacity: 10
   isEscape: 0
 --- !u!1 &1359969939

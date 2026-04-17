@@ -24,9 +24,8 @@ public class Module : MonoBehaviour
 {
     [SerializeField] private ModuleType type;
     [SerializeField] private int capacity = 10;
-    [SerializeField] private bool isEscape;
 
-    public bool IsEscape => isEscape;
+    public bool IsEscape => type == ModuleType.Escape;
 
     private Renderer renderer;
     private Color originalColor;
@@ -71,7 +70,7 @@ public class Module : MonoBehaviour
 
     public void SetState(ModuleState newState)
     {
-        if (isEscape) return;
+        if (IsEscape) return;
 
         state = newState;
         Debug.Log("Module state changed to: " + newState);
@@ -116,7 +115,7 @@ public class Module : MonoBehaviour
 
     public void Repaired()
     {
-        repaircooldown = Time.time + 16f;
+        repaircooldown = Time.time + 5f;
     }
 
 }
