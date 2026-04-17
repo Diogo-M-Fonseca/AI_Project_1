@@ -4,6 +4,7 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class Tripulante : MonoBehaviour
 {
+    //navmesh agent conecting to navmesh sistem
     private NavMeshAgent agent;
 
     //Health value of each tripulante
@@ -13,10 +14,10 @@ public class Tripulante : MonoBehaviour
     //current state
     private AgentState state;
 
-    //collection of all modulos present in the map
+    //collection of all modules present in the map
     private Module[] modules;
 
-    //modulo that the tripulante searches for
+    //module that the tripulante searches for
     private Module targetModule;
 
     private float timer;
